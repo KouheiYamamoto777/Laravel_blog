@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Blog;
+use App\Http\Requests\BlogRequest;
 
 class BlogController extends Controller
 {
@@ -53,7 +54,7 @@ class BlogController extends Controller
      * @param array $request
      * @return view
      */
-    public function exeStore(Request $request)
+    public function exeStore(BlogRequest $request)
     {
         // ブログのデータを受け取る
         $inputs = $request->all();
