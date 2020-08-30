@@ -91,6 +91,33 @@ class BlogController extends Controller
         ));
     }
 
-    
+    /**
+     * ブログを更新する
+     * @param array $request
+     * @return view
+     */
+    public function exeUpdate(BlogRequest $request)
+    {
+        // ブログのデータを受け取る
+        $inputs = $request->all();
+
+        \DB::beginTransaction();
+        try {
+            // ブログを更新する
+            $blog = Blog::find($inputs['id']);
+            $blog->fill([
+                'title' => $inputs['title'],
+                'content' => $inputs['content']
+            ]);
+            $blog->save();
+            \DB::commit();
+        } catch (\Throwable $e) {
+            \DB::rollback();
+            abort(500);
+        }
+
+        \Session::flash('err_msg', 'ブログを更新しました');
+        return redirect(route('blogs'));
+    }
 
 }
