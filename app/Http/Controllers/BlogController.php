@@ -73,5 +73,24 @@ class BlogController extends Controller
         return redirect(route('blogs'));
     }
 
+    /**
+     * ブログ編集フォームを表示する
+     * @param int $id
+     * @return view
+     */
+    public function showEdit($id)
+    {
+        $blog = Blog::find($id);
+
+        if(is_null($blog)) {
+            \Session::flash('err_msg', 'データがありません');
+            return redirect(route('blogs'));
+        }
+        return view('blog.edit', array(
+            'blog' => $blog
+        ));
+    }
+
+    
 
 }
